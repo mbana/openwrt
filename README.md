@@ -1,3 +1,7 @@
+You probably want to look at the `R4Pro_4e` branch.
+
+---
+
 ![OpenWrt logo](include/logo.png)
 
 OpenWrt Project is a Linux operating system targeting embedded devices. Instead
