@@ -167,7 +167,11 @@ Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
 +CONFIG_HEXDUMP=y
 --- /dev/null
 +++ b/configs/mt7988a_bananapi_bpi-r4-pro-4e-sdmmc_defconfig
-@@ -0,0 +1,156 @@
+@@ -0,0 +1,165 @@
++CONFIG_PCIE_MEDIATEK=y
++CONFIG_CC_OPTIMIZE_FOR_DEBUG=y
++CONFIG_LTO=n
++CONFIG_SYS_BOOTM_LEN=0x30000000
 +CONFIG_ARM=y
 +CONFIG_ARM_SMCCC=y
 +CONFIG_SYS_HAS_NONCACHED_MEMORY=y
@@ -324,6 +328,11 @@ Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
 +CONFIG_USB_STORAGE=y
 +CONFIG_ZSTD=y
 +CONFIG_HEXDUMP=y
++CONFIG_DEBUG_UART_ANNOUNCE=y
++#CONFIG_DEBUG=y
++#CONFIG_LOG=y
++#CONFIG_LOG_MAX_LEVEL=9
++#CONFIG_LOG_DEFAULT_LEVEL=9
 --- /dev/null
 +++ b/configs/mt7988a_bananapi_bpi-r4-pro-4e-snand_defconfig
 @@ -0,0 +1,155 @@
@@ -547,11 +556,11 @@ Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
 +ipaddr=192.168.1.1
 +serverip=192.168.1.254
 +loadaddr=0x50000000
-+bootargs=console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait
++bootargs=console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1 nokaslr debug verbose log_level=7
 +bootcmd=if pstore check ; then run boot_recovery ; else run boot_sdmmc ; fi
 +bootconf=config-mt7988a-bananapi-bpi-r4-pro-4e
 +bootconf_sd=mt7988a-bananapi-bpi-r4-pro-sd
-+bootconf_extra=mt7988a-bananapi-bpi-r4-pro-cn13#mt7988a-bananapi-bpi-r4-pro-cn14#mt7988a-bananapi-bpi-r4-pro-4e-wan-sfp
++bootconf_extra=mt7988a-bananapi-bpi-r4-pro-cn15#mt7988a-bananapi-bpi-r4-pro-cn18#mt7988a-bananapi-bpi-r4-pro-4e-wan-sfp
 +bootdelay=0
 +bootfile=openwrt-mediatek-filogic-bananapi_bpi-r4-pro-4e-initramfs-recovery.itb
 +bootfile_upg=openwrt-mediatek-filogic-bananapi_bpi-r4-pro-4e-squashfs-sysupgrade.itb

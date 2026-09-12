@@ -778,10 +778,15 @@ define Device/bananapi_bpi-r4-pro-common
   DEVICE_PACKAGES := kmod-dsa-mxl862xx kmod-hwmon-pwmfan kmod-i2c-mux-pca954x \
 		     kmod-eeprom-at24 kmod-mt7996-firmware kmod-mt7996-233-firmware \
 		     kmod-rtc-pcf8563 kmod-sfp kmod-usb3 e2fsprogs f2fsck mkf2fs \
-		     mt7988-wo-firmware kmod-gpio-pca953x kmod-nvme
+		     mt7988-wo-firmware kmod-gpio-pca953x kmod-nvme kmod-pps kmod-pps-gpio
   IMAGES := sysupgrade.itb
   KERNEL_LOADADDR := 0x46000000
   KERNEL_INITRAMFS_SUFFIX := -recovery.itb
+  UBINIZE_OPTS := -E 5
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  KERNEL_IN_UBI := 1
+  UBOOTENV_IN_UBI := 1
   ARTIFACTS := \
 	       emmc-gpt.bin emmc-preloader.bin emmc-bl31-uboot.fip \
 	       snand-preloader.bin sdcard.img.gz snand-bl31-uboot.fip
@@ -794,13 +799,13 @@ define Device/bananapi_bpi-r4-pro-common
 				   pad-to 17k | mt7988-bl2 sdmmc-$$(DEVICE_BL2) |\
 				   pad-to 6656k | mt7988-bl31-uboot $$(DEVICE_NAME)-sdmmc |\
 				$(if $(CONFIG_TARGET_ROOTFS_INITRAMFS),\
-				   pad-to 12M | append-image-stage initramfs-recovery.itb | check-size 44m |\
+				   pad-to 12M | append-image-stage initramfs-recovery.itb | check-size 768m |\
 				) \
-				   pad-to 44M | mt7988-bl2 spim-nand-ubi-$$(DEVICE_BL2) |\
-				   pad-to 45M | mt7988-bl31-uboot $$(DEVICE_NAME)-snand |\
-				   pad-to 51M | mt7988-bl2 emmc-$$(DEVICE_BL2) |\
-				   pad-to 52M | mt7988-bl31-uboot $$(DEVICE_NAME)-emmc |\
-				   pad-to 56M | mt798x-gpt emmc |\
+				   pad-to 768M | mt7988-bl2 spim-nand-ubi-$$(DEVICE_BL2) |\
+				   pad-to 141M | mt7988-bl31-uboot $$(DEVICE_NAME)-snand |\
+				   pad-to 147M | mt7988-bl2 emmc-$$(DEVICE_BL2) |\
+				   pad-to 148M | mt7988-bl31-uboot $$(DEVICE_NAME)-emmc |\
+				   pad-to 152M | mt798x-gpt emmc |\
 				$(if $(CONFIG_TARGET_ROOTFS_SQUASHFS),\
 				   pad-to 64M | append-image squashfs-sysupgrade.itb | check-size |\
 				) \
